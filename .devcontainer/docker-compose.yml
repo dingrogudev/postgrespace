@@ -26,4 +26,8 @@ services:
     ports:
       - "5050:80"
     volumes:
-      - ../data:/var/lib/pgadmin/storage
+      # Montar data/ directamente sobre el subdirectorio del usuario de pgAdmin.
+      # pgAdmin escribe los backups en /var/lib/pgadmin/storage/postgres_sql.dev/
+      # y como ese path ya existe como mount point, no intenta crearlo ni hacerle chmod 700.
+      # Resultado: los archivos quedan en data/ sin subcarpeta intermedia.
+      - ../data:/var/lib/pgadmin/storage/postgres_sql.dev
